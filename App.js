@@ -25,6 +25,16 @@ function Auth() {
   );
 }
 
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Tracks" component={Tracks} />
+      <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
+    </Tab.Navigator>
+  );
+}
+
 function Tracks() {
   return (
     <StackTracks.Navigator>
@@ -38,15 +48,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        { false ? (
-          <>
-            <Tab.Screen name="Account" component={AccountScreen} />
-            <Tab.Screen name="Tracks" component={Tracks} />
-            <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
-          </>
-        ) : (
-            <Stack.Screen name="Auth" component={Auth} />
-          )}
+        <Stack.Screen name="Auth" component={Auth} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
