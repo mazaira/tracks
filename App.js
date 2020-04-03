@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 
 function Auth() {
   return (
-    <StackAuth.Navigator>
+    <StackAuth.Navigator screenOptions={{headerShown: false }}>
       <StackAuth.Screen name="Signup" component={SignupScreen} />
       <StackAuth.Screen name="Signin" component={SigninScreen} />
     </StackAuth.Navigator>
@@ -47,7 +47,7 @@ function Tracks() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
