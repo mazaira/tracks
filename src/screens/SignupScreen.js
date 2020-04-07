@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Context as AuthcContext } from '../context/AuthContext';
+import { Context as AuthContext } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 
 const SignupScreen = ({ navigation }) => {
-  const { state, signup, clearErrorMessage } = useContext(AuthcContext);
+  const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
   useEffect(() => {
-    clearErrorMessage()
+    clearErrorMessage();
 
     const listener = navigation.addListener('blur', clearErrorMessage);
 

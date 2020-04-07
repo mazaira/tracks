@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Context as AuthcContext } from '../context/AuthContext';
+import { Context as AuthContext } from '../context/AuthContext';
 import AuthForm from '../components/AuthForm';
 import NavLink from '../components/NavLink';
 
 const SigninScreen = ({ navigation }) => {
-  const { state, signin, clearErrorMessage } = useContext(AuthcContext);
+  const { state, signin, clearErrorMessage } = useContext(AuthContext);
 
   useEffect(() => {
     clearErrorMessage()
