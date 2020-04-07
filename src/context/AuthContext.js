@@ -1,6 +1,6 @@
+import { AsyncStorage } from 'react-native';
 import createDataContext from './createDataContext';
 import trackerApi from '../api/tracker';
-import { AsyncStorage } from 'react-native';
 import { navigate } from '../RootNavigation';
 
 const authReducer = (state, action) => {
@@ -9,10 +9,16 @@ const authReducer = (state, action) => {
       return { ...state, errorMessage: action.payload };
     case 'signup':
       return { errorMessage: '', token: action.payload };
+    case 'signin':
+      return { errorMessage: '', token: action.payload };
+    case 'clear_error_message':
+      return { ...state, errorMessage: '' };
     default:
       return state;
   }
 };
+
+const clearErrorMessage = dispatch => () => { dispatch({type: 'clear_error_message'})};
 
 const signup = (dispatch) => async ({email, password}) => {
   try {
@@ -22,13 +28,20 @@ const signup = (dispatch) => async ({email, password}) => {
 
     navigate('Home', {screen: 'Tracks'});
   } catch(err) {
-    console.log(err)
     dispatch({type: 'add_error', payload: 'Something went wrong'});
   }
 };
 
 const signin = (dispatch) => async ({email, password}) => {
+  try {
+    const response = await trackerApi.post('/signin', {email, password});
+    await AsyncStorage.setItem('token', response.data.token);
+    dispatch({type:'signin', payload: response.data.token})
 
+    navigate('Home', {screen: 'Account'});
+  } catch(err) {
+    dispatch({type: 'add_error', payload: 'Something went wrong'});
+  }
 };
 
 const signout = (dispatch) => {
@@ -39,6 +52,6 @@ const signout = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signin, signout, signup},
+  { signin, signout, signup, clearErrorMessage},
   { token: null, errorMessage: ''}
 )
