@@ -11,6 +11,7 @@ import TrackCreateScreen from './src/screens/TrackCreateScreen';
 import TrackDetailScreen from './src/screens/TrackDetailScreen';
 import TrackListScreen from './src/screens/TrackListScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { navigationRef } from './src/RootNavigation';
 
 const StackAuth = createStackNavigator();
 const StackTracks = createStackNavigator();
@@ -28,7 +29,7 @@ function Auth() {
 
 function Home() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator >
       <Tab.Screen name="Account" component={AccountScreen} />
       <Tab.Screen name="Tracks" component={Tracks} />
       <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
@@ -47,7 +48,7 @@ function Tracks() {
 
 function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Auth" component={Auth} />
         <Stack.Screen name="Home" component={Home} />
