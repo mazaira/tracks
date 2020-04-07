@@ -31,9 +31,9 @@ function Auth() {
 function Home() {
   return (
     <Tab.Navigator >
-      <Tab.Screen name="Account" component={AccountScreen} />
       <Tab.Screen name="Tracks" component={Tracks} />
       <Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
+      <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
 }

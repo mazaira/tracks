@@ -11,6 +11,8 @@ const authReducer = (state, action) => {
       return { errorMessage: '', token: action.payload };
     case 'signin':
       return { errorMessage: '', token: action.payload };
+    case 'signout':
+      return { errorMessage: '', token: null };
     case 'clear_error_message':
       return { ...state, errorMessage: '' };
     default:
@@ -24,7 +26,7 @@ const tryLocalSignin = dispatch => async () => {
   const token = await AsyncStorage.getItem('token');
   if (token) {
     dispatch({ type: 'signin', payload: token })
-    navigate('Home', { screen: 'Account' });
+    navigate('Home');
   } else {
     navigate('Auth');
   }
@@ -48,16 +50,22 @@ const signin = (dispatch) => async ({email, password}) => {
     await AsyncStorage.setItem('token', response.data.token);
     dispatch({type:'signin', payload: response.data.token})
 
-    navigate('Home', {screen: 'Account'});
+    navigate('Home');
   } catch(err) {
     dispatch({type: 'add_error', payload: 'Something went wrong'});
   }
 };
 
-const signout = (dispatch) => {
-  return () => {
+const signout = (dispatch) => async () => {
+  try {
+    await AsyncStorage.removeItem('token');
+    dispatch({ type: 'signout'})
 
-  };
+    navigate('Auth');
+  } catch (err) {
+    console.log('adios')
+    dispatch({ type: 'add_error', payload: 'Something went wrong' });
+  }
 };
 
 export const { Provider, Context } = createDataContext(
